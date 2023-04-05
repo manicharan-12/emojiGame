@@ -10,11 +10,16 @@ class EmojiGame extends Component {
   state = {
     clickedEmojisList: [],
     isGameInProgress: true,
-    topScore: 0,
+    topScore: localStorage.getItem('topScore'),
   }
 
   resetGame = () => {
-    this.setState({clickedEmojisList: [], isGameInProgress: true})
+    const getTopScoreFromLocalStorage = localStorage.getItem('topScore')
+    this.setState({
+      clickedEmojisList: [],
+      isGameInProgress: true,
+      topScore: getTopScoreFromLocalStorage,
+    })
   }
 
   renderScoreCard = () => {
@@ -37,6 +42,7 @@ class EmojiGame extends Component {
 
     if (currentScore > topScore) {
       newTopScore = currentScore
+      localStorage.setItem('topScore', newTopScore)
     }
 
     this.setState({topScore: newTopScore, isGameInProgress: false})
